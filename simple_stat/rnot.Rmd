@@ -1,0 +1,72 @@
+---
+title: "Correlation and Simple Linear Regression"
+output: html_notebook
+---
+
+A. Covariance and correlation
+We can compute the covariance and correlation in R using the cov() and cor()
+functions.
+Ex. A pediatrician wants to study the relationship between a child’s height and
+their head circumference (both measured in inches). She selects a SRS of 11
+three-year old children and obtains the following data. (See lecture notes for
+data)
+Begin by reading in the data:
+
+```{r}
+Height = c(27.75, 24.5, 25.5, 26, 25, 27.75, 26.5, 27, 26.75, 26.75, 27.5)
+Circ = c(17.5, 17.1, 17.1,17.3, 16.9, 17.6, 17.3, 17.5, 17.3, 17.5, 17.5)
+Dat = data.frame(Height,Circ)
+attach(Dat)
+Dat
+```
+
+To make a scatter plot of circumference against height type:
+17.6
+```{r}
+plot(Dat$Height,Dat$Circ)
+```
+
+Studying the plot, there appears to be a linear relationship between the two
+variables.
+This relationship can be quantified by computing the covariance and correlation
+between variables.
+
+```{r}
+cov(Dat) # Covariance matrix
+```
+From the output we see that the variance of Height and Circ is 1.198 and 0.048,
+respectively. The covariance between the two variables is 0.219 indicating a
+positive relationship.
+```{r}
+cor(Dat) # Correlation matrix
+```
+
+#Simple Linear Regression 
+
+If there exists a strong linear relationship between two variables it is often of
+interest to model the relationship using a regression line. The main function for
+performing regression in R is lm(). It has many options that we will explore
+throughout the semester.
+To perform simple linear regression we can use the command:
+lm(response ~ explanatory)
+Here the terms response and explanatory in the function should be replaced by
+the names of the response and explanatory variables, respectively, used in the
+analysis.
+Ex. Fit a regression line that describes the relationship between Height and
+Circumference.
+```{r}
+results = lm(Circ ~ Height)
+results
+```
+
+The results indicate that the least squares regression line takes the form: yhat =
+12.493 + 0.183x. Hence the model states that a one inch increase in height
+would lead to a 0.183 inch increase in head circumference.
+To superimpose the regression line over the data first make a scatter plot of Circ
+against Height, and therefore overlay the regression line using the command
+abline(results). Here results contains all relevant information about the regression
+line.
+```{r}
+plot(Height,Circ)
+abline(results)
+```
